@@ -7,7 +7,15 @@ import { Contact } from "./contact.model";
     <p>Number of contacts: {{ contactCounter }}</p>
     <ul>
       <li *ngFor="let contactElem of contacts">
-        <cnt-contact [class.selected]="contactElem === selectedContact" (click)="select(contactElem)" [contact]="contactElem"></cnt-contact>
+        <cnt-contact
+            [class.selected]="contactElem === selectedContact"
+            (click)="select(contactElem)"
+            [contact]="contactElem">
+        </cnt-contact>
+        <cnt-contact-detail
+            *ngIf="contactElem === selectedContact"
+            [contact]="contactElem">
+        </cnt-contact-detail>
       </li>
     </ul>
   `,
