@@ -6,14 +6,8 @@ import { Contact } from "./contact.model";
   template: `
     <p>Number of contacts: {{ contactCounter }}</p>
     <ul>
-      <li>
-        <cnt-contact [contact]="contact1"></cnt-contact>
-      </li>
-      <li>
-        <cnt-contact [contact]="contact2"></cnt-contact>
-      </li>
-      <li>
-        <cnt-contact [contact]="contact3"></cnt-contact>
+      <li *ngFor="let contactElem of contacts">
+        <cnt-contact [contact]="contactElem"></cnt-contact>
       </li>
     </ul>
   `,
@@ -21,26 +15,24 @@ import { Contact } from "./contact.model";
   ]
 })
 export class ContactsComponent implements OnInit {
-  contactCounter = 3;
+  contactCounter: number = 3;
 
-  contact1: Contact = {
+  contacts = [{
     email: "contact1@test.com",
     firstName: "contact1",
     id: 1,
     lastName: "contact1"
-  }
-  contact2: Contact = {
+  }, {
     email: "contact2@test.com",
     firstName: "contact2",
     id: 2,
     lastName: "contact2"
-  }
-  contact3: Contact = {
+  }, {
     email: "contact3@test.com",
     firstName: "contact3",
     id: 3,
     lastName: "contact3"
-  }
+  }];
 
   constructor() { }
 

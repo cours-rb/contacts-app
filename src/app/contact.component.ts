@@ -4,9 +4,9 @@ import { Contact } from "./contact.model";
 @Component({
   selector: 'cnt-contact',
   template: `
-    {{ contact?.firstName }}
-    {{ contact?.lastName }}
-    {{ contact?.email }}
+    {{ contact?.firstName | titlecase }}
+    {{ contact?.lastName | uppercase }}
+    {{ contact?.email | lowercase }}
   `,
   styles: [
   ]
