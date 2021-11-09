@@ -7,17 +7,19 @@ import { Contact } from "./contact.model";
     <p>Number of contacts: {{ contactCounter }}</p>
     <ul>
       <li *ngFor="let contactElem of contacts">
-        <cnt-contact [contact]="contactElem"></cnt-contact>
+        <cnt-contact [class.selected]="contactElem === selectedContact" (click)="select(contactElem)" [contact]="contactElem"></cnt-contact>
       </li>
     </ul>
   `,
-  styles: [
+  styles: ['.selected { background: red }'
   ]
 })
 export class ContactsComponent implements OnInit {
   contactCounter: number = 3;
 
-  contacts = [{
+  selectedContact?: Contact;
+
+  contacts: Contact[] = [{
     email: "contact1@test.com",
     firstName: "contact1",
     id: 1,
@@ -39,4 +41,11 @@ export class ContactsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  select(contact: Contact) {
+    if (this.selectedContact !== contact) {
+      this.selectedContact = contact;
+    } else {
+      this.selectedContact = undefined;
+    }
+  }
 }
