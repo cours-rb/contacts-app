@@ -4,7 +4,7 @@ import { Contact } from "./contact.model";
 @Component({
   selector: 'cnt-contacts',
   template: `
-    <p>Number of contacts: {{ contactCounter }}</p>
+    <p>Number of contacts: {{ contacts.length }}</p>
     <ul>
       <li *ngFor="let contactElem of contacts">
         <cnt-contact
@@ -14,7 +14,8 @@ import { Contact } from "./contact.model";
         </cnt-contact>
         <cnt-contact-detail
             *ngIf="contactElem === selectedContact"
-            [contact]="contactElem">
+            [contact]="contactElem"
+            (delete)="deleteContact(contactElem)">
         </cnt-contact-detail>
       </li>
     </ul>
@@ -55,5 +56,9 @@ export class ContactsComponent implements OnInit {
     } else {
       this.selectedContact = undefined;
     }
+  }
+
+  deleteContact(contact: Contact) {
+    this.contacts.splice(this.contacts.indexOf(contact), 1);
   }
 }
