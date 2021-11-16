@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Contact } from "./contact.model";
 import { FormControl, FormGroup } from "@angular/forms";
-import {ContactIdService} from "./contact-id.service";
+import { ContactsService } from "./contacts.service";
 
 @Component({
   selector: 'cnt-contact-form',
@@ -23,17 +23,12 @@ import {ContactIdService} from "./contact-id.service";
   styles: []
 })
 export class ContactFormComponent implements OnInit {
-  @Input() contact: Contact = {
-    id: this.contactIdService.getNextId(), // TODO Improve this
-    firstName: '',
-    lastName: '',
-    email: ''
-  };
+  @Input() contact: Contact = this.contactsService.createContact();
   @Output() save = new EventEmitter<Contact>();
   @Output() cancel = new EventEmitter();
   contactForm: FormGroup;
 
-  constructor(private contactIdService: ContactIdService) {
+  constructor(private contactsService: ContactsService) {
     this.contactForm = new FormGroup({
       firstName: new FormControl(),
       lastName: new FormControl(),

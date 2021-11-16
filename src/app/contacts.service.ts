@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Contact } from "./contact.model";
+import {ContactIdService} from "./contact-id.service";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,16 @@ export class ContactsService {
     lastName: "contact3"
   }];
 
-  constructor() { }
+  constructor(private contactIdService: ContactIdService) { }
+
+  createContact(): Contact {
+    return {
+      id: this.contactIdService.getNextId(), // TODO Improve this
+      firstName: '',
+      lastName: '',
+      email: ''
+    }
+  }
 
   getList(): Contact[] {
     return this.contacts;
