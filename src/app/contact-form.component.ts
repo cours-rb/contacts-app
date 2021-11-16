@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Contact } from "./contact.model";
 import { FormControl, FormGroup } from "@angular/forms";
+import {ContactIdService} from "./contact-id.service";
 
 @Component({
   selector: 'cnt-contact-form',
@@ -22,9 +23,8 @@ import { FormControl, FormGroup } from "@angular/forms";
   styles: []
 })
 export class ContactFormComponent implements OnInit {
-  static lastId = 4; // FIXME find a better way :)
   @Input() contact: Contact = {
-    id: ContactFormComponent.lastId++,
+    id: this.contactIdService.getNextId(), // TODO Improve this
     firstName: '',
     lastName: '',
     email: ''
@@ -33,7 +33,7 @@ export class ContactFormComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   contactForm: FormGroup;
 
-  constructor() {
+  constructor(private contactIdService: ContactIdService) {
     this.contactForm = new FormGroup({
       firstName: new FormControl(),
       lastName: new FormControl(),
