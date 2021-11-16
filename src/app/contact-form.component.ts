@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Contact } from "./contact.model";
-import { FormControl, FormGroup } from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ContactsService } from "./contacts.service";
 
 @Component({
@@ -16,11 +16,11 @@ import { ContactsService } from "./contacts.service";
       <div>
         <label>Email: </label><input formControlName="email">
       </div>
-      <input type="submit" value="Save">
+      <input type="submit" [disabled]="contactForm.invalid" value="Save">
       <input type="button" (click)="cancelForm()" value="Cancel">
     </form>
   `,
-  styles: []
+  styles: ['input.ng-invalid { background: lightcoral }']
 })
 export class ContactFormComponent implements OnInit {
   @Input() contact: Contact = this.contactsService.createContact();
@@ -30,9 +30,9 @@ export class ContactFormComponent implements OnInit {
 
   constructor(private contactsService: ContactsService) {
     this.contactForm = new FormGroup({
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      email: new FormControl()
+      firstName: new FormControl(null, Validators.required),
+      lastName: new FormControl(null, Validators.required),
+      email: new FormControl(null, [Validators.required, Validators.email])
     });
   }
 
