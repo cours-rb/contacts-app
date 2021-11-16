@@ -17,6 +17,7 @@ import { Contact } from "./contact.model";
         <cnt-contact-form
             *ngIf="contactElem === selectedContact && editMode"
             (save)="modify($event)"
+            (cancel)="editMode = false"
             [contact]="contactElem">
         </cnt-contact-form>
         <cnt-contact-detail
@@ -71,7 +72,9 @@ export class ContactsComponent implements OnInit {
   }
 
   edit(contact: Contact) {
-    this.select(contact);
+    if (this.selectedContact !== contact) {
+      this.select(contact);
+    }
     this.editMode = !this.editMode;
   }
 

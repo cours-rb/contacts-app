@@ -16,7 +16,7 @@ import { FormControl, FormGroup } from "@angular/forms";
         <label>Email: </label><input formControlName="email">
       </div>
       <input type="submit" value="Save">
-      <input type="button" value="Cancel">
+      <input type="button" (click)="cancelForm()" value="Cancel">
     </form>
   `,
   styles: []
@@ -29,6 +29,7 @@ export class ContactFormComponent implements OnInit {
     email: ''
   };
   @Output() save = new EventEmitter<Contact>();
+  @Output() cancel = new EventEmitter();
   contactForm: FormGroup;
 
   constructor() {
@@ -51,5 +52,9 @@ export class ContactFormComponent implements OnInit {
     };
 
     this.save.emit(contactToSave);
+  }
+
+  cancelForm() {
+    this.cancel.emit();
   }
 }
