@@ -12,16 +12,16 @@ import { Contact } from "./contact.model";
             (click)="select(contactElem)"
             [contact]="contactElem">
         </cnt-contact>
-        <button (click)="toggleEdit()">Edit</button>
+        <button (click)="edit(contactElem)">Edit</button>
+        <button (click)="delete(contactElem)">Delete</button>
         <cnt-contact-form
             *ngIf="contactElem === selectedContact && editMode"
-            (save)="modifyContact($event)"
+            (save)="modify($event)"
             [contact]="contactElem">
         </cnt-contact-form>
         <cnt-contact-detail
             *ngIf="contactElem === selectedContact && !editMode"
-            [contact]="contactElem"
-            (delete)="deleteContact(contactElem)">
+            [contact]="contactElem">
         </cnt-contact-detail>
       </li>
     </ul>
@@ -66,16 +66,17 @@ export class ContactsComponent implements OnInit {
     }
   }
 
-  deleteContact(contact: Contact) {
+  delete(contact: Contact) {
     this.contacts.splice(this.contacts.indexOf(contact), 1);
   }
 
-  toggleEdit() {
+  edit(contact: Contact) {
+    this.select(contact);
     this.editMode = !this.editMode;
   }
 
-  modifyContact($event: Contact) {
-    const index = this.contacts.findIndex(c => (c.id === $event.id))
-    this.contacts.splice(index, 1, $event);
+  modify(contact: Contact) {
+    const index = this.contacts.findIndex(c => (c.id === contact.id))
+    this.contacts.splice(index, 1, contact);
   }
 }
