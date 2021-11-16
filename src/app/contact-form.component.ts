@@ -22,8 +22,9 @@ import { FormControl, FormGroup } from "@angular/forms";
   styles: []
 })
 export class ContactFormComponent implements OnInit {
+  static lastId = 4; // FIXME find a better way :)
   @Input() contact: Contact = {
-    id: 0,
+    id: ContactFormComponent.lastId++,
     firstName: '',
     lastName: '',
     email: ''

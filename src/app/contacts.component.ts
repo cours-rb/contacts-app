@@ -27,7 +27,12 @@ import { Contact } from "./contact.model";
       </li>
     </ul>
     <input type="button" value="Add Contact" (click)="displayAddForm = true">
-    <cnt-contact-form *ngIf="displayAddForm"></cnt-contact-form>
+    <cnt-contact-form
+        *ngIf="displayAddForm"
+        (cancel)="displayAddForm = false"
+        (save)="add($event)"
+    >
+    </cnt-contact-form>
   `,
   styles: ['.selected { background: lightcoral }'
   ]
@@ -83,5 +88,10 @@ export class ContactsComponent implements OnInit {
   modify(contact: Contact) {
     const index = this.contacts.findIndex(c => (c.id === contact.id))
     this.contacts.splice(index, 1, contact);
+  }
+
+  add(contact: Contact) {
+    this.contacts.push(contact);
+    this.displayAddForm = false;
   }
 }
