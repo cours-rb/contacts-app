@@ -12,19 +12,26 @@ import { Contact } from "./contact.model";
             (click)="select(contactElem)"
             [contact]="contactElem">
         </cnt-contact>
+        <button (click)="toggleEdit()">Edit</button>
+        <cnt-contact-form
+            *ngIf="contactElem === selectedContact && editMode"
+            (save)="modifyContact($event)"
+            [contact]="contactElem">
+        </cnt-contact-form>
         <cnt-contact-detail
-            *ngIf="contactElem === selectedContact"
+            *ngIf="contactElem === selectedContact && !editMode"
             [contact]="contactElem"
             (delete)="deleteContact(contactElem)">
         </cnt-contact-detail>
       </li>
     </ul>
   `,
-  styles: ['.selected { background: red }'
+  styles: ['.selected { background: lightcoral }'
   ]
 })
 export class ContactsComponent implements OnInit {
   contactCounter: number = 3;
+  editMode: boolean = false;
 
   selectedContact?: Contact;
 
@@ -51,6 +58,7 @@ export class ContactsComponent implements OnInit {
   }
 
   select(contact: Contact) {
+    this.editMode = false;
     if (this.selectedContact !== contact) {
       this.selectedContact = contact;
     } else {
@@ -60,5 +68,14 @@ export class ContactsComponent implements OnInit {
 
   deleteContact(contact: Contact) {
     this.contacts.splice(this.contacts.indexOf(contact), 1);
+  }
+
+  toggleEdit() {
+    this.editMode = !this.editMode;
+  }
+
+  modifyContact($event: Contact) {
+    const index = this.contacts.findIndex(c => (c.id === $event.id))
+    this.contacts.splice(index, 1, $event);
   }
 }
