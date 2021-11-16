@@ -26,6 +26,8 @@ import { Contact } from "./contact.model";
         </cnt-contact-detail>
       </li>
     </ul>
+    <input type="button" value="Add Contact" (click)="displayAddForm = true">
+    <cnt-contact-form *ngIf="displayAddForm"></cnt-contact-form>
   `,
   styles: ['.selected { background: lightcoral }'
   ]
@@ -33,9 +35,9 @@ import { Contact } from "./contact.model";
 export class ContactsComponent implements OnInit {
   contactCounter: number = 3;
   editMode: boolean = false;
+  displayAddForm:boolean = false;
 
   selectedContact?: Contact;
-
   contacts: Contact[] = [{
     email: "contact1@test.com",
     firstName: "contact1",
