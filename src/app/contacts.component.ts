@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from "./contact.model";
+import {ContactsService} from "./contacts.service";
 
 @Component({
   selector: 'cnt-contacts',
@@ -43,24 +44,11 @@ export class ContactsComponent implements OnInit {
   displayAddForm:boolean = false;
 
   selectedContact?: Contact;
-  contacts: Contact[] = [{
-    email: "contact1@test.com",
-    firstName: "contact1",
-    id: 1,
-    lastName: "contact1"
-  }, {
-    email: "contact2@test.com",
-    firstName: "contact2",
-    id: 2,
-    lastName: "contact2"
-  }, {
-    email: "contact3@test.com",
-    firstName: "contact3",
-    id: 3,
-    lastName: "contact3"
-  }];
+  contacts: Contact[];
 
-  constructor() { }
+  constructor(private contactsService: ContactsService) {
+    this.contacts = contactsService.getList();
+  }
 
   ngOnInit(): void {
   }
@@ -75,7 +63,7 @@ export class ContactsComponent implements OnInit {
   }
 
   delete(contact: Contact) {
-    this.contacts.splice(this.contacts.indexOf(contact), 1);
+    this.contactsService.delete(contact);
   }
 
   edit(contact: Contact) {
@@ -86,12 +74,11 @@ export class ContactsComponent implements OnInit {
   }
 
   modify(contact: Contact) {
-    const index = this.contacts.findIndex(c => (c.id === contact.id))
-    this.contacts.splice(index, 1, contact);
+    this.contactsService.modify(contact);
   }
 
   add(contact: Contact) {
-    this.contacts.push(contact);
+    this.contactsService.add(contact);
     this.displayAddForm = false;
   }
 }
