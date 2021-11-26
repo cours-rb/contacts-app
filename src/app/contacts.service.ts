@@ -35,7 +35,11 @@ export class ContactsService {
   }
 
   add(contact: Contact): void {
-    this.contacts.push(contact);
+    this.http.post<Contact[]>(this.contactApiUrl, contact)
+        .subscribe((data) => {
+          console.log(data);
+          this.contacts.push(contact);
+        });
   }
 
   modify(contact: Contact): void {
