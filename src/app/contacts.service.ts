@@ -52,6 +52,10 @@ export class ContactsService {
   }
 
   delete(contact: Contact): void {
-    this.contacts.splice(this.contacts.indexOf(contact), 1);
+    this.http.delete(this.contactApiUrl + contact.id)
+        .subscribe(data => {
+          console.log(data);
+          this.contacts.splice(this.contacts.indexOf(contact), 1);
+        })
   }
 }
