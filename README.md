@@ -4,6 +4,17 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
+## Development server
+
+NOTE: If `db.json` doesn't exist, create it in the projet root folder, it must contain:
+```json
+{
+  "contacts": []
+}
+```
+
+Run `json-server db.json` to launch the REST API server
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding

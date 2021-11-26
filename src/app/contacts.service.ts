@@ -1,29 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Contact } from "./contact.model";
-import {ContactIdService} from "./contact-id.service";
+import { ContactIdService } from "./contact-id.service";
+import { HttpClient } from "@angular/common/http";
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
-  contacts: Contact[] = [{
-    email: "contact1@test.com",
-    firstName: "contact1",
-    id: 1,
-    lastName: "contact1"
-  }, {
-    email: "contact2@test.com",
-    firstName: "contact2",
-    id: 2,
-    lastName: "contact2"
-  }, {
-    email: "contact3@test.com",
-    firstName: "contact3",
-    id: 3,
-    lastName: "contact3"
-  }];
+  contacts: Contact[] = [];
+  contactApiUrl:string = environment.apiUrl + 'contacts/';
 
-  constructor(private contactIdService: ContactIdService) { }
+  constructor(private contactIdService: ContactIdService, private http: HttpClient) {
+    this.http.get<Contact[]>(this.contactApiUrl)
+        .subscribe((contacts) => {
+          console.log(contacts);
+          // IMPORTANT: Do not replace this.contacts with new data.
+          // If this.contacts reference is replaced, change detection won't work
+          this.contacts.push(...contacts);
+        });
+  }
 
   createContact(): Contact {
     return {

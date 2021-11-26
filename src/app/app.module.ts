@@ -6,7 +6,8 @@ import { ContactsComponent } from './contacts.component';
 import { ContactComponent } from './contact.component';
 import { ContactDetailComponent } from './contact-detail.component';
 import { ContactFormComponent } from './contact-form.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {ReactiveFormsModule} from "@angular/forms";
   ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         ReactiveFormsModule
     ],
   providers: [],
