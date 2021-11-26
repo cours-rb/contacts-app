@@ -43,8 +43,12 @@ export class ContactsService {
   }
 
   modify(contact: Contact): void {
-    const index = this.contacts.findIndex(c => (c.id === contact.id))
-    this.contacts.splice(index, 1, contact);
+    this.http.put(this.contactApiUrl + contact.id, contact)
+        .subscribe(data => {
+          console.log(data);
+          const index = this.contacts.findIndex(c => (c.id === contact.id))
+          this.contacts.splice(index, 1, contact);
+        })
   }
 
   delete(contact: Contact): void {
