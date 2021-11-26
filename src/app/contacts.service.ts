@@ -23,7 +23,7 @@ export class ContactsService {
 
   createContact(): Contact {
     return {
-      id: this.contactIdService.getNextId(), // TODO Improve this
+      id: this.contactIdService.getNextId(),
       firstName: '',
       lastName: '',
       email: ''
@@ -35,7 +35,7 @@ export class ContactsService {
   }
 
   add(contact: Contact): void {
-    this.http.post<Contact[]>(this.contactApiUrl, contact)
+    this.http.post(this.contactApiUrl, contact)
         .subscribe((data) => {
           console.log(data);
           this.contacts.push(contact);

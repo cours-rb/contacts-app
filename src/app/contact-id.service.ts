@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactIdService {
-  previousId = 4; // TODO Find a better Id
-
   constructor() { }
 
-  getNextId(): number {
-    this.previousId++;
-    return this.previousId;
+  getNextId(): string {
+    return uuidv4();
   }
 }
