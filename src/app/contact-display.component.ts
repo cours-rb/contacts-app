@@ -22,7 +22,10 @@ export class ContactDisplayComponent implements OnInit {
 
           if (contactId) {
               contactService.get(contactId)
-                  .subscribe(contact => this.contact = contact)
+                  .subscribe(
+                  contact => this.contact = contact,
+                  () => router.navigate(['/contacts'])
+              )
           }
         }
     )
