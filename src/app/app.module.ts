@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { ContactSearchComponent } from './contact-search.component';
 import { ContactListComponent } from './contact-list.component';
 import { AppRoutingModule } from "./app-routing.module";
+import { ContactDisplayComponent } from './contact-display.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AppRoutingModule } from "./app-routing.module";
     ContactDetailComponent,
     ContactFormComponent,
     ContactSearchComponent,
-    ContactListComponent
+    ContactListComponent,
+    ContactDisplayComponent
   ],
     imports: [
       AppRoutingModule,

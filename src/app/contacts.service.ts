@@ -29,6 +29,10 @@ export class ContactsService {
     }
   }
 
+  get(id: string): Observable<Contact> {
+      return this.http.get<Contact>(this.contactApiUrl + id);
+  }
+
   getList(): Observable<Contact[]> {
     return this.contacts$;
   }

@@ -11,7 +11,7 @@ import { ContactsService } from "./contacts.service";
     <ul>
       <li *ngFor="let contactElem of contacts$ | async">
         <cnt-contact
-            (click)="select(contactElem)"
+            [routerLink]="['/contacts', contactElem.id]"
             [contact]="contactElem">
         </cnt-contact>
         <button (click)="edit(contactElem)">Edit</button>
@@ -22,10 +22,6 @@ import { ContactsService } from "./contacts.service";
   styles: ['.selected { background: lightcoral }']
 })
 export class ContactListComponent implements OnInit {
-  editMode: boolean = false;
-  displayAddForm:boolean = false;
-
-  selectedContact?: Contact;
   contacts$: Observable<Contact[]> = this.contactsService.getList();
 
   constructor(private contactsService: ContactsService) {}
@@ -33,23 +29,10 @@ export class ContactListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  select(contact: Contact) {
-    this.editMode = false;
-    if (this.selectedContact !== contact) {
-      this.selectedContact = contact;
-    } else {
-      this.selectedContact = undefined;
-    }
-  }
-
   delete(contact: Contact) {
     this.contactsService.delete(contact);
   }
 
   edit(contact: Contact) {
-    if (this.selectedContact !== contact) {
-      this.select(contact);
-    }
-    this.editMode = !this.editMode;
   }
 }
