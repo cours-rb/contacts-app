@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from "./contact.model";
-import {ContactsService} from "./contacts.service";
+import { ContactsService } from "./contacts.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'cnt-contacts',
   template: `
-    <p>Number of contacts: {{ contacts.length }}</p>
+    <p>Number of contacts: {{ (contacts$ | async)?.length }}</p>
     <ul>
-      <li *ngFor="let contactElem of contacts">
+      <li *ngFor="let contactElem of contacts$ | async">
         <cnt-contact
             [class.selected]="contactElem === selectedContact"
             (click)="select(contactElem)"
@@ -43,15 +44,11 @@ export class ContactsComponent implements OnInit {
   displayAddForm:boolean = false;
 
   selectedContact?: Contact;
-  contacts: Contact[] = [];
+  contacts$: Observable<Contact[]> = this.contactsService.getList();
 
-  constructor(private contactsService: ContactsService) {
-    contactsService.getList()
-        .subscribe(contacts => this.contacts = contacts);
-  }
+  constructor(private contactsService: ContactsService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   select(contact: Contact) {
     this.editMode = false;
