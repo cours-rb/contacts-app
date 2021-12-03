@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Contact } from "./contact.model";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { ContactsService } from "./contacts.service";
+import {ContactIdService} from "./contact-id.service";
 
 @Component({
   selector: 'cnt-contact-form',
@@ -23,12 +24,12 @@ import { ContactsService } from "./contacts.service";
   styles: ['input.ng-invalid { background: lightcoral }']
 })
 export class ContactFormComponent implements OnInit {
-  @Input() contact: Contact = this.contactsService.createContact();
+  @Input() contact?: Contact;
   @Output() save = new EventEmitter<Contact>();
   @Output() cancel = new EventEmitter();
   contactForm: FormGroup;
 
-  constructor(private contactsService: ContactsService) {
+  constructor(private contactIdService: ContactIdService) {
     this.contactForm = new FormGroup({
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
@@ -43,8 +44,10 @@ export class ContactFormComponent implements OnInit {
   }
 
   submit() {
+    const id = this.contact?.id || this.contactIdService.getNextId();
+
     const contactToSave: Contact = {
-      id: this.contact.id, ...this.contactForm.value
+      id: id, ...this.contactForm.value
     };
 
     this.save.emit(contactToSave);

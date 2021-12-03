@@ -18,6 +18,7 @@ import { ContactsService } from "./contacts.service";
         <button (click)="delete(contactElem)">Delete</button>
       </li>
     </ul>
+    <button routerLink="/contacts/new">Add</button>
   `,
   styles: ['.selected { background: lightcoral }']
 })
