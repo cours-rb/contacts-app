@@ -39,15 +39,15 @@ import {ContactsService} from "./contacts.service";
   ]
 })
 export class ContactsComponent implements OnInit {
-  contactCounter: number = 3;
   editMode: boolean = false;
   displayAddForm:boolean = false;
 
   selectedContact?: Contact;
-  contacts: Contact[];
+  contacts: Contact[] = [];
 
   constructor(private contactsService: ContactsService) {
-    this.contacts = contactsService.getList();
+    contactsService.getList()
+        .subscribe(contacts => this.contacts = contacts);
   }
 
   ngOnInit(): void {

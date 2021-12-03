@@ -3,21 +3,20 @@ import { Contact } from "./contact.model";
 import { ContactIdService } from "./contact-id.service";
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../environments/environment';
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
-  contacts: Contact[] = [];
+  contacts$: BehaviorSubject<Contact[]> = new BehaviorSubject<Contact[]>([]);
   contactApiUrl:string = environment.apiUrl + 'contacts/';
 
   constructor(private contactIdService: ContactIdService, private http: HttpClient) {
     this.http.get<Contact[]>(this.contactApiUrl)
         .subscribe((contacts) => {
           console.log(contacts);
-          // IMPORTANT: Do not replace this.contacts with new data.
-          // If this.contacts reference is replaced, change detection won't work
-          this.contacts.push(...contacts);
+          this.contacts$.next(contacts);
         });
   }
 
@@ -30,15 +29,18 @@ export class ContactsService {
     }
   }
 
-  getList(): Contact[] {
-    return this.contacts;
+  getList(): Observable<Contact[]> {
+    return this.contacts$;
   }
 
   add(contact: Contact): void {
     this.http.post(this.contactApiUrl, contact)
         .subscribe((data) => {
           console.log(data);
-          this.contacts.push(contact);
+          const contacts = this.contacts$.getValue();
+
+          contacts.push(contact)
+          this.contacts$.next(contacts);
         });
   }
 
@@ -46,8 +48,12 @@ export class ContactsService {
     this.http.put(this.contactApiUrl + contact.id, contact)
         .subscribe(data => {
           console.log(data);
-          const index = this.contacts.findIndex(c => (c.id === contact.id))
-          this.contacts.splice(index, 1, contact);
+          const contacts = this.contacts$.getValue();
+
+          const index = contacts.findIndex(c => (c.id === contact.id))
+          contacts.splice(index, 1, contact);
+
+          this.contacts$.next(contacts);
         })
   }
 
@@ -55,7 +61,10 @@ export class ContactsService {
     this.http.delete(this.contactApiUrl + contact.id)
         .subscribe(data => {
           console.log(data);
-          this.contacts.splice(this.contacts.indexOf(contact), 1);
+            const contacts = this.contacts$.getValue();
+
+            contacts.splice(contacts.indexOf(contact), 1);
+            this.contacts$.next(contacts);
         })
   }
 }
