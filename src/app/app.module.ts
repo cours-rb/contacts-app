@@ -10,6 +10,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ContactSearchComponent } from './contact-search.component';
 import { ContactListComponent } from './contact-list.component';
+import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -22,9 +23,10 @@ import { ContactListComponent } from './contact-list.component';
     ContactListComponent
   ],
     imports: [
-        BrowserModule,
-        HttpClientModule,
-        ReactiveFormsModule
+      AppRoutingModule,
+      BrowserModule,
+      HttpClientModule,
+      ReactiveFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]
