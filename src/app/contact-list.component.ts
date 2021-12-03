@@ -11,31 +11,13 @@ import { ContactsService } from "./contacts.service";
     <ul>
       <li *ngFor="let contactElem of contacts$ | async">
         <cnt-contact
-            [class.selected]="contactElem === selectedContact"
             (click)="select(contactElem)"
             [contact]="contactElem">
         </cnt-contact>
         <button (click)="edit(contactElem)">Edit</button>
         <button (click)="delete(contactElem)">Delete</button>
-        <cnt-contact-form
-            *ngIf="contactElem === selectedContact && editMode"
-            (save)="modify($event)"
-            (cancel)="editMode = false"
-            [contact]="contactElem">
-        </cnt-contact-form>
-        <cnt-contact-detail
-            *ngIf="contactElem === selectedContact && !editMode"
-            [contact]="contactElem">
-        </cnt-contact-detail>
       </li>
     </ul>
-    <cnt-contact-form
-        *ngIf="displayAddForm"
-        (cancel)="displayAddForm = false"
-        (save)="add($event)"
-    >
-    </cnt-contact-form>
-    <input type="button" value="Add Contact" (click)="displayAddForm = true">
   `,
   styles: ['.selected { background: lightcoral }']
 })
@@ -69,14 +51,5 @@ export class ContactListComponent implements OnInit {
       this.select(contact);
     }
     this.editMode = !this.editMode;
-  }
-
-  modify(contact: Contact) {
-    this.contactsService.modify(contact);
-  }
-
-  add(contact: Contact) {
-    this.contactsService.add(contact);
-    this.displayAddForm = false;
   }
 }
