@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 @Component({
   selector: 'cnt-contacts',
   template: `
+    <cnt-contact-search></cnt-contact-search>
     <p>Number of contacts: {{ (contacts$ | async)?.length }}</p>
     <ul>
       <li *ngFor="let contactElem of contacts$ | async">

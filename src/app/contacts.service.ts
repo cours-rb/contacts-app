@@ -67,4 +67,15 @@ export class ContactsService {
             this.contacts$.next(contacts);
         })
   }
+
+  search(query: string) {
+      this.http.get<Contact[]>(
+          this.contactApiUrl,
+          { params: { q: query }}
+      ).subscribe(
+          contacts => {
+              this.contacts$.next(contacts);
+          }
+      )
+  }
 }
