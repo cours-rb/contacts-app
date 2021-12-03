@@ -12,6 +12,7 @@ import { ContactSearchComponent } from './contact-search.component';
 import { ContactListComponent } from './contact-list.component';
 import { AppRoutingModule } from "./app-routing.module";
 import { ContactDisplayComponent } from './contact-display.component';
+import { ContactEditComponent } from './contact-edit.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ContactDisplayComponent } from './contact-display.component';
     ContactFormComponent,
     ContactSearchComponent,
     ContactListComponent,
-    ContactDisplayComponent
+    ContactDisplayComponent,
+    ContactEditComponent
   ],
     imports: [
       AppRoutingModule,

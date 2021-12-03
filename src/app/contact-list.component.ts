@@ -14,7 +14,7 @@ import { ContactsService } from "./contacts.service";
             [routerLink]="['/contacts', contactElem.id]"
             [contact]="contactElem">
         </cnt-contact>
-        <button (click)="edit(contactElem)">Edit</button>
+        <button [routerLink]="['/contacts', contactElem.id, 'edit']">Edit</button>
         <button (click)="delete(contactElem)">Delete</button>
       </li>
     </ul>
@@ -31,8 +31,5 @@ export class ContactListComponent implements OnInit {
 
   delete(contact: Contact) {
     this.contactsService.delete(contact);
-  }
-
-  edit(contact: Contact) {
   }
 }
