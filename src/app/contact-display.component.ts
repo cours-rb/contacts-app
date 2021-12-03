@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from "@angular/router";
+import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
 import { Contact } from "./contact.model";
 import { ContactsService } from "./contacts.service";
 
@@ -16,19 +16,11 @@ export class ContactDisplayComponent implements OnInit {
   contact?: Contact;
 
   constructor(route: ActivatedRoute, contactService: ContactsService, private router: Router) {
-    route.paramMap.subscribe(
-        (paramMap: ParamMap) => {
-          const contactId = paramMap.get('contactId');
-
-          if (contactId) {
-              contactService.get(contactId)
-                  .subscribe(
-                  contact => this.contact = contact,
-                  () => router.navigate(['/contacts'])
-              )
+      route.data.subscribe(
+          (data: Data) => {
+              this.contact = data.contact;
           }
-        }
-    )
+      );
   }
 
   ngOnInit(): void {

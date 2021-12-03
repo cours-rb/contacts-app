@@ -3,13 +3,26 @@ import { Routes, RouterModule } from '@angular/router';
 import {ContactListComponent} from "./contact-list.component";
 import {ContactDisplayComponent} from "./contact-display.component";
 import {ContactEditComponent} from "./contact-edit.component";
+import {ContactResolver} from "./contact.resolver";
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/contacts' },
     { path: 'contacts', component: ContactListComponent },
     { path: 'contacts/new', component: ContactEditComponent },
-    { path: 'contacts/:contactId', component: ContactDisplayComponent },
-    { path: 'contacts/:contactId/edit', component: ContactEditComponent }
+    {
+        path: 'contacts/:contactId',
+        component: ContactDisplayComponent,
+        resolve: {
+            contact: ContactResolver
+        }
+    },
+    {
+        path: 'contacts/:contactId/edit',
+        component: ContactEditComponent,
+        resolve: {
+            contact: ContactResolver
+        }
+    }
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {ActivatedRoute, Data, ParamMap, Router} from "@angular/router";
 import {ContactsService} from "./contacts.service";
 import {Contact} from "./contact.model";
 
@@ -17,21 +17,15 @@ export class ContactEditComponent implements OnInit {
   private createMode: boolean = false;
 
   constructor(route: ActivatedRoute, private contactService: ContactsService, private router: Router) {
-    route.paramMap.subscribe(
-        (paramMap: ParamMap) => {
-          const contactId = paramMap.get('contactId');
-
-          if (contactId) {
-            contactService.get(contactId)
-                .subscribe(
-                    contact => this.contact = contact,
-                    () => router.navigate(['/contacts'])
-                )
+    route.data.subscribe(
+        (data: Data) => {
+          if (data.contact) {
+            this.contact = data.contact;
           } else {
             this.createMode = true;
           }
         }
-    )
+    );
   }
 
   ngOnInit(): void {
